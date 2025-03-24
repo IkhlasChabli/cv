@@ -154,13 +154,15 @@ a, a:hover { text-decoration: none; }
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
     animation: fadeOut 0.5s ease 3s forwards;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
 .loader-container {
@@ -168,6 +170,8 @@ a, a:hover { text-decoration: none; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 500px;
 }
 
 .name-display {
@@ -322,6 +326,7 @@ a, a:hover { text-decoration: none; }
 /* Le style pour h1 est maintenant entièrement géré par .gradient-text */
 .home-text h1 { 
     padding-bottom: 8px;
+    width: 100%;
 }
 
 /* Style pour le titre gradient */
@@ -354,7 +359,7 @@ a, a:hover { text-decoration: none; }
 .hero-tagline {
     height: 60px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .text-animation {
@@ -1760,13 +1765,19 @@ a, a:hover { text-decoration: none; }
 /* Navbar toggler pour mobile */
 .navbar-toggler {
     background-color: var(--main-color);
-    height: 34px;
-    width: 44px;
+    height: 42px;
+    width: 52px;
     padding: 0;
-    font-size: 17px;
+    font-size: 22px;
     color: var(--white);
     border: none;
     cursor: pointer;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar-collapse {
@@ -1808,7 +1819,9 @@ a, a:hover { text-decoration: none; }
 /* Media Queries */
 @media(max-width: 991px) {
     .header-content {
-        height: 640px;
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 50px;
     }
     
     .navbar-toggler {
@@ -1824,6 +1837,8 @@ a, a:hover { text-decoration: none; }
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
     }
     
     .navbar-collapse.show {
@@ -1831,12 +1846,16 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar-nav {
-        padding: 10px 0;
+        padding: 15px 0;
     }
     
     .navbar .nav-item {
         margin: 0;
-        padding: 5px 15px;
+        padding: 10px 20px;
+    }
+    
+    .navbar .nav-item .nav-link {
+        font-size: 16px;
     }
     
     .navbar .nav-item .nav-link::before {
@@ -1850,12 +1869,15 @@ a, a:hover { text-decoration: none; }
     .home-img {
         display: flex;
         justify-content: center;
-        margin-bottom: 30px;
+        margin: 20px 0 40px;
+        order: -1;
     }
     
     .home-img img {
-        max-width: 70%;
-        height: auto;
+        max-width: 250px;
+        border-radius: 50%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        border: 5px solid rgba(217, 137, 181, 0.2);
     }
     
     .row {
@@ -1868,13 +1890,34 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         text-align: center;
+    }
+    
+    .gradient-text {
+        font-size: 42px;
+    }
+    
+    .hero-tagline {
+        margin: 0 auto 20px;
+        max-width: 300px;
+    }
+    
+    .text-line {
+        font-size: 20px;
+        justify-content: center;
+    }
+    
+    .home-text p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 10px;
     }
     
     .home-btn {
         display: flex;
         justify-content: center;
+        margin-top: 20px;
     }
     
     .header-social {
@@ -2023,7 +2066,7 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar {
-        padding: 20px 0;
+        padding: 15px 0;
     }
     
     .navbar .navbar-brand {
@@ -2031,15 +2074,24 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar-toggler {
-        width: 38px;
-        height: 30px;
+        width: 50px;
+        height: 46px;
+        margin-right: 5px;
+    }
+    
+    .container {
+        padding: 0 20px;
     }
     
     .header-content {
         height: auto;
-        min-height: 600px;
-        padding-top: 90px;
-        padding-bottom: 40px;
+        min-height: 100vh;
+        padding-top: 80px;
+        padding-bottom: 50px;
+    }
+    
+    .header-shape {
+        opacity: 0.6;
     }
     
     .home-text h4 {
@@ -2047,11 +2099,12 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text h1, .gradient-text {
-        font-size: 32px;
+        font-size: 36px;
     }
     
     .home-text p {
         font-size: 16px;
+        margin-bottom: 8px;
     }
     
     .btn-1 {
@@ -2103,20 +2156,49 @@ a, a:hover { text-decoration: none; }
     
     /* Amélioration de la page de chargement sur mobile */
     .name-display {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .loader {
+        gap: 5px;
     }
     
     .loader span {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
     
     .loader-subtitle {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        margin-top: 15px;
     }
     
     /* Amélioration pour la photo de profil sur mobile */
+    .home-img {
+        margin-bottom: 25px;
+    }
+    
     .home-img img {
-        max-width: 85%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    /* Amélioration pour le texte d'accueil */
+    .hero-tagline {
+        height: 50px;
+    }
+    
+    .text-line {
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    @keyframes moveUp {
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-50px); }
+        50%, 70% { transform: translateY(-100px); }
+        75%, 95% { transform: translateY(-150px); }
+        100% { transform: translateY(-200px); }
     }
 }
 
