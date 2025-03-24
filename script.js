@@ -45,40 +45,9 @@ $(document).ready(function() {
             });
     });
 
-    // Détection de l'appareil pour optimisations spécifiques
-    function isMobile() {
-        return window.innerWidth <= 767;
-    }
-
-    // Adaptation de l'expérience sur mobile
-    function setupMobileExperience() {
-        if (isMobile()) {
-            // Optimiser la performance des animations sur mobile
-            $('[data-aos]').attr('data-aos-once', 'true');
-            
-            // Meilleure fermeture du menu sur mobile
-            $('.nav-link').on('click', function() {
-                $('.navbar-collapse').removeClass('show');
-            });
-            
-            // Ajuster la hauteur du header en fonction de la taille de l'écran
-            function adjustHeaderHeight() {
-                var windowHeight = $(window).height();
-                $('.header-content').css('min-height', windowHeight + 'px');
-            }
-            
-            // Exécuter l'ajustement
-            adjustHeaderHeight();
-            $(window).on('resize', adjustHeaderHeight);
-        }
-    }
-
-    // Exécuter les optimisations mobiles
-    setupMobileExperience();
-
     // Effet de scroll pour la navigation
     $(window).on("scroll", function() {
-        if ($(this).scrollTop() > 50) {
+        if($(this).scrollTop() > 90) {
             $(".navbar").addClass("navbar-shrink");
         } else {
             $(".navbar").removeClass("navbar-shrink");
@@ -87,7 +56,7 @@ $(document).ready(function() {
 
     // Initialisation de Parallax.js pour les formes flottantes
     function parallaxMouse() {
-        if ($("#parallax").length) {
+        if($("#parallax").length) {
             var scene = document.getElementById("parallax");
             var parallax = new Parallax(scene);
         }
@@ -140,7 +109,7 @@ $(document).ready(function() {
         AOS.init({
             duration: 800,
             easing: 'ease-in-out',
-            once: isMobile(), // Animations une seule fois sur mobile pour de meilleures performances
+            once: false,
             mirror: false
         });
     }
@@ -149,24 +118,19 @@ $(document).ready(function() {
     function animateStats() {
         $('.stat-number').each(function() {
             var $this = $(this);
-            var text = $this.text();
-            var target = parseInt(text);
-            
-            // Ne pas animer si déjà animé
-            if (text.indexOf('+') === -1) {
-                $this.prop('Counter', 0).animate({
-                    Counter: target
-                }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function(now) {
-                        $this.text(Math.ceil(now));
-                    },
-                    complete: function() {
-                        $this.text(target + '+');
-                    }
-                });
-            }
+            var target = parseInt($this.text());
+            $this.prop('Counter', 0).animate({
+                Counter: target
+            }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function(now) {
+                    $this.text(Math.ceil(now));
+                },
+                complete: function() {
+                    $this.text(target + '+');
+                }
+            });
         });
     }
 
@@ -269,33 +233,6 @@ $(document).ready(function() {
         showSlide(index);
     });
 
-    // Support tactile pour le slider de projets
-    if (isMobile()) {
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        $('.projects-slider').on('touchstart', function(e) {
-            touchStartX = e.originalEvent.touches[0].clientX;
-        });
-        
-        $('.projects-slider').on('touchend', function(e) {
-            touchEndX = e.originalEvent.changedTouches[0].clientX;
-            handleSwipe();
-        });
-        
-        function handleSwipe() {
-            if (touchStartX - touchEndX > 50) {
-                // Swipe gauche - slide suivant
-                $('.next-btn').click();
-            }
-            
-            if (touchEndX - touchStartX > 50) {
-                // Swipe droite - slide précédent
-                $('.prev-btn').click();
-            }
-        }
-    }
-
     // Filtrage des projets showcase
     $('.showcase-filter-btn').on('click', function() {
         var filter = $(this).data('filter');
@@ -327,15 +264,42 @@ $(document).ready(function() {
         }
     );
 
-    // Fermer le menu lorsqu'on clique n'importe où sur la page sur mobile
-    $(document).on('click', function(e) {
-        if($('.navbar-collapse').hasClass('show') && 
-           !$(e.target).closest('.navbar-collapse').length && 
-           !$(e.target).closest('.navbar-toggler').length) {
-            $('.navbar-collapse').removeClass('show');
-        }
-    });
+    // Animation du texte sur la page d'accueil 
+    const textLines = document.querySelectorAll('.text-line');
+    
+    // Si l'animation CSS ne fonctionne pas correctement, activer cette fonction alternative
+    function rotateText() {
+        // Masquer tous les textes
+        textLines.forEach(line => {
+            line.style.opacity = '0';
+            line.style.transform = 'translateY(20px)';
+        });
+        
+        // Afficher le texte courant
+        textLines[currentTextIndex].style.opacity = '1';
+        textLines[currentTextIndex].style.transform = 'translateY(0)';
+        
+        // Passer au texte suivant
+        currentTextIndex = (currentTextIndex + 1) % textLines.length;
+    }
+    
+    // Décommenter cette ligne si l'animation CSS ne fonctionne pas
+    // let currentTextIndex = 0;
+    // setInterval(rotateText, 2500);
 
+    // Initialisation de ScrollIt si disponible
+    if(typeof $.scrollIt === 'function') {
+        $.scrollIt({
+            upKey: 38,
+            downKey: 40,
+            easing: 'linear',
+            scrollTime: 600,
+            activeClass: 'active',
+            onPageChange: null,
+            topOffset: -100
+        });
+    }
+    
     // Gestion d'erreurs potentielles avec les images
     $('img').on('error', function() {
         $(this).attr('src', 'placeholder.svg'); // Remplacer par une image par défaut
@@ -372,6 +336,29 @@ $(document).ready(function() {
     }
     
     lazyLoadImages();
+
+    // Amélioration du comportement sur mobile
+    // Fermer le menu lorsqu'on clique n'importe où sur la page sur mobile
+    $(document).on('click', function(e) {
+        if($('.navbar-collapse').hasClass('show') && 
+           !$(e.target).closest('.navbar-collapse').length && 
+           !$(e.target).closest('.navbar-toggler').length) {
+            $('.navbar-collapse').removeClass('show');
+        }
+    });
+    
+    // Ajuster la hauteur de la page d'accueil sur mobile
+    function adjustHeight() {
+        if ($(window).width() < 768) {
+            var windowHeight = $(window).height();
+            $('.header-content').css('height', windowHeight + 'px');
+        } else {
+            $('.header-content').css('height', '800px');
+        }
+    }
+    
+    adjustHeight();
+    $(window).resize(adjustHeight);
     
     // Améliorer le chargement des images
     $('img').each(function() {
