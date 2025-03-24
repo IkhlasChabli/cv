@@ -1777,24 +1777,24 @@ a, a:hover { text-decoration: none; }
     margin-left: auto;
 }
 
-/* Alert Styles pour EmailJS */
+/* Styling for EmailJS alerts */
 .alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
 }
 
 .alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
 }
 
 .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
 }
 
 .mt-3 {
@@ -1824,8 +1824,6 @@ a, a:hover { text-decoration: none; }
     
     .navbar-collapse.show {
         max-height: 500px;
-        padding: 15px;
-        border-radius: 0 0 15px 15px;
     }
     
     .navbar-nav {
@@ -1833,20 +1831,8 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar .nav-item {
-        margin: 10px 0;
-        text-align: center;
-    }
-    
-    .navbar .nav-item .nav-link {
-        display: inline-block;
-        padding: 8px 15px;
-        transition: all 0.3s;
-    }
-    
-    .navbar .nav-item .nav-link:hover,
-    .navbar .nav-item .nav-link.active {
-        background-color: rgba(217, 137, 181, 0.1);
-        border-radius: 20px;
+        margin: 0;
+        padding: 5px 15px;
     }
     
     .navbar .nav-item .nav-link::before {
@@ -1928,13 +1914,6 @@ a, a:hover { text-decoration: none; }
 }
 
 @media(max-width: 767px) {
-    /* Ajustements pour mobile */
-    .header-content {
-        height: auto;
-        min-height: 100vh;
-        padding-bottom: 50px;
-    }
-    
     .header-shape.shape-one img,
     .header-shape.shape-two img,
     .header-shape.shape-four img,
@@ -2012,58 +1991,10 @@ a, a:hover { text-decoration: none; }
     
     .timeline-dot {
         left: -35px;
-        width: 20px;
-        height: 20px;
     }
     
     .events-grid {
         grid-template-columns: 1fr;
-    }
-    
-    /* Ajustements de la section à propos */
-    .about-stats {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .stat-item {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-    
-    /* Ajustements de la timeline */
-    .timeline {
-        padding-left: 30px;
-    }
-    
-    .timeline-dot {
-        left: -18px;
-        width: 20px;
-        height: 20px;
-    }
-    
-    /* Amélioration de l'affichage des compétences */
-    .tools-grid {
-        justify-content: flex-start;
-    }
-    
-    .tool-item {
-        margin-bottom: 10px;
-    }
-    
-    /* Amélioration des cards */
-    .skill-card, .certification-card, .project-slide {
-        margin-bottom: 20px;
-    }
-    
-    /* Ajustement des intérêts */
-    .interests-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    /* Amélioration de la section contact */
-    .contact-form-container {
-        padding: 20px;
     }
 }
 
@@ -2097,7 +2028,7 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text h1, .gradient-text {
-        font-size: 28px;
+        font-size: 32px;
     }
     
     .home-text p {
@@ -2150,42 +2081,14 @@ a, a:hover { text-decoration: none; }
         flex-direction: column;
         text-align: center;
     }
-    
-    /* Ajustements pour très petits écrans */
-    .text-line {
-        font-size: 18px;
-        height: 50px;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .home-text h1, .gradient-text {
+        font-size: 50px;
     }
     
-    .hero-tagline {
-        height: 50px;
-    }
-    
-    @keyframes moveUp {
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-50px); }
-        50%, 70% { transform: translateY(-100px); }
-        75%, 95% { transform: translateY(-150px); }
-        100% { transform: translateY(-200px); }
-    }
-    
-    /* Amélioration de l'affichage des projets */
-    .project-dots {
-        bottom: 10px;
-    }
-    
-    .project-tag {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-    }
-    
-    /* Ajustement des sections */
-    .section-title-container {
-        margin-bottom: 30px;
-    }
-    
-    /* Ajuster l'espacement général */
-    .section-padding {
-        padding: 40px 0;
+    .home-text h4 {
+        font-size: 26px;
     }
 }
