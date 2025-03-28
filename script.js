@@ -1,4 +1,50 @@
 $(document).ready(function() {
+    // Initialisation d'EmailJS
+    (function() {
+        // Initialiser avec votre clé publique
+        emailjs.init("s0Gx4g7xRm_hW6YFK");
+    })();
+
+    // Gestion du formulaire de contact
+    $('#contact-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        var $submitBtn = $(this).find('button[type="submit"]');
+        var originalText = $submitBtn.find('.button-inner').text();
+        var $formStatus = $('#form-status');
+        
+        $submitBtn.find('.button-inner').text('Envoi en cours...').prop('disabled', true);
+        
+        // Préparation des paramètres pour EmailJS
+        var templateParams = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            subject: $('#subject').val(),
+            message: $('#message').val()
+        };
+        
+        // Envoi de l'email via EmailJS
+        emailjs.send('service_f40sbkk', 'template_snk9j37', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                $('#contact-form')[0].reset();
+                $submitBtn.find('.button-inner').text(originalText).prop('disabled', false);
+                
+                // Afficher un message de confirmation
+                $formStatus.html('<div class="alert alert-success">Votre message a été envoyé avec succès!</div>');
+                
+                setTimeout(function() {
+                    $formStatus.html('');
+                }, 5000);
+            }, function(error) {
+                console.log('FAILED...', error);
+                $submitBtn.find('.button-inner').text(originalText).prop('disabled', false);
+                
+                // Afficher un message d'erreur
+                $formStatus.html('<div class="alert alert-danger">Une erreur est survenue. Veuillez réessayer.</div>');
+            });
+    });
+
     // Effet de scroll pour la navigation
     $(window).on("scroll", function() {
         if($(this).scrollTop() > 90) {
@@ -51,9 +97,10 @@ $(document).ready(function() {
         e.preventDefault();
         var target = this.hash;
         var $target = $(target);
+        var headerHeight = $('.navbar').outerHeight();
         
         $('html, body').animate({
-            'scrollTop': $target.offset().top - 100
+            'scrollTop': $target.offset().top - headerHeight - 20
         }, 800, 'swing');
     });
 
@@ -201,82 +248,6 @@ $(document).ready(function() {
         }
     });
 
-    // Gestion du formulaire de contact avec EmailJS
-    $('#contact-form').on('submit', function(e) {
-        e.preventDefault();
-        
-        var $submitBtn = $(this).find('button[type="submit"]');
-        var originalText = $submitBtn.text();
-        
-        $submitBtn.text('Envoi en cours...').prop('disabled', true);
-        
-        // Récupération des données du formulaire
-        var formData = {
-            from_name: $('#name').val(),
-            reply_to: $('#email').val(),
-            subject: $('#subject').val(),
-            message: $('#message').val()
-        };
-        
-        // Envoi du message via EmailJS
-        emailjs.send('service_f40sbkk', 'template_snk9j37', formData)
-            .then(function(response) {
-                console.log('SUCCESS!', response.status, response.text);
-                
-                // Réinitialiser le formulaire
-                $('#contact-form')[0].reset();
-                $submitBtn.text(originalText).prop('disabled', false);
-                
-                // Afficher un message de confirmation
-                var confirmationMsg = $('<div class="alert alert-success mt-3">Votre message a été envoyé avec succès!</div>');
-                $('#contact-form').append(confirmationMsg);
-                
-                setTimeout(function() {
-                    confirmationMsg.fadeOut(function() {
-                        $(this).remove();
-                    });
-                }, 3000);
-            }, function(error) {
-                console.log('FAILED...', error);
-                
-                // Réactiver le bouton
-                $submitBtn.text(originalText).prop('disabled', false);
-                
-                // Afficher un message d'erreur
-                var errorMsg = $('<div class="alert alert-danger mt-3">L\'envoi a échoué. Veuillez réessayer.</div>');
-                $('#contact-form').append(errorMsg);
-                
-                setTimeout(function() {
-                    errorMsg.fadeOut(function() {
-                        $(this).remove();
-                    });
-                }, 3000);
-            });
-    });
-
-    // Pour les carrousels et lightbox (si vous ajoutez des galeries)
-    if(typeof $.fn.owlCarousel !== 'undefined') {
-        $(".owl-carousel").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true,
-            nav: true,
-            navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-            dots: true
-        });
-    }
-    
-    if(typeof $.fn.magnificPopup !== 'undefined') {
-        $('.image-popup').magnificPopup({
-            type: 'image',
-            gallery: {
-                enabled: true
-            }
-        });
-    }
-
     // Effet de hover sur les icônes de compétences
     $('.skill-icon').hover(
         function() {
@@ -365,4 +336,36 @@ $(document).ready(function() {
     }
     
     lazyLoadImages();
+
+    // Amélioration du comportement sur mobile
+    // Fermer le menu lorsqu'on clique n'importe où sur la page sur mobile
+    $(document).on('click', function(e) {
+        if($('.navbar-collapse').hasClass('show') && 
+           !$(e.target).closest('.navbar-collapse').length && 
+           !$(e.target).closest('.navbar-toggler').length) {
+            $('.navbar-collapse').removeClass('show');
+        }
+    });
+    
+    // Ajuster la hauteur de la page d'accueil sur mobile
+    function adjustHeight() {
+        if ($(window).width() < 768) {
+            var windowHeight = $(window).height();
+            $('.header-content').css('height', windowHeight + 'px');
+        } else {
+            $('.header-content').css('height', '800px');
+        }
+    }
+    
+    adjustHeight();
+    $(window).resize(adjustHeight);
+    
+    // Améliorer le chargement des images
+    $('img').each(function() {
+        if (!this.complete) {
+            $(this).on('error', function() {
+                $(this).attr('src', 'placeholder.svg');
+            });
+        }
+    });
 });
