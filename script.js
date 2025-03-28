@@ -52,13 +52,8 @@ $(document).ready(function() {
         var target = this.hash;
         var $target = $(target);
         
-        // Tenir compte de la hauteur de la navbar
-        var navHeight = $('.navbar').outerHeight();
-        // Ajuster le décalage en fonction du dispositif (mobile ou desktop)
-        var offset = window.innerWidth <= 768 ? navHeight + 30 : navHeight;
-        
         $('html, body').animate({
-            'scrollTop': $target.offset().top - offset
+            'scrollTop': $target.offset().top - 100
         }, 800, 'swing');
     });
 
@@ -298,91 +293,76 @@ $(document).ready(function() {
         }
     );
 
-    // Optimisations pour les appareils mobiles SEULEMENT
-    function mobileOptimizations() {
-        if (window.innerWidth <= 991) {
-            // Amélioration du bouton hamburger sur mobile
-            if (!$('.navbar-toggler').hasClass('mobile-enhanced')) {
-                $('.navbar-toggler').addClass('mobile-enhanced').css({
-                    'display': 'flex',
-                    'align-items': 'center',
-                    'justify-content': 'center',
-                    'height': '40px',
-                    'width': '50px',
-                    'font-size': '20px'
-                });
-            }
-            
-            // Amélioration de l'image principale sur mobile
-            $('.home-img img').css({
-                'border-radius': '15px',
-                'box-shadow': '0 10px 30px rgba(0, 0, 0, 0.1)',
-                'max-width': '75%',
-                'margin': '0 auto'
-            });
-            
-            // Amélioration des icônes sociales sur mobile
-            $('.header-social-icon ul li a').css({
-                'display': 'flex',
-                'align-items': 'center',
-                'justify-content': 'center',
-                'width': '45px',
-                'height': '45px',
-                'line-height': '1'
-            });
-            
-            // Centre le texte et les boutons sur mobile
-            $('.home-text').css('text-align', 'center');
-            $('.home-btn').css({
-                'display': 'flex',
-                'justify-content': 'center'
-            });
-        } else {
-            // Réinitialisation pour desktop
-            if ($('.navbar-toggler').hasClass('mobile-enhanced')) {
-                $('.navbar-toggler').removeClass('mobile-enhanced').css({
-                    'display': '',
-                    'align-items': '',
-                    'justify-content': '',
-                    'height': '',
-                    'width': '',
-                    'font-size': ''
-                });
-            }
-            
-            // Réinitialisation de l'image principale
-            $('.home-img img').css({
-                'border-radius': '',
-                'box-shadow': '',
-                'max-width': '',
-                'margin': ''
-            });
-            
-            // Réinitialisation des icônes sociales
-            $('.header-social-icon ul li a').css({
-                'display': '',
-                'align-items': '',
-                'justify-content': '',
-                'width': '',
-                'height': '',
-                'line-height': ''
-            });
-            
-            // Réinitialisation du texte et des boutons
-            $('.home-text').css('text-align', '');
-            $('.home-btn').css({
-                'display': '',
-                'justify-content': ''
-            });
-        }
+    // Animation du texte sur la page d'accueil 
+    const textLines = document.querySelectorAll('.text-line');
+    
+    // Si l'animation CSS ne fonctionne pas correctement, activer cette fonction alternative
+    function rotateText() {
+        // Masquer tous les textes
+        textLines.forEach(line => {
+            line.style.opacity = '0';
+            line.style.transform = 'translateY(20px)';
+        });
+        
+        // Afficher le texte courant
+        textLines[currentTextIndex].style.opacity = '1';
+        textLines[currentTextIndex].style.transform = 'translateY(0)';
+        
+        // Passer au texte suivant
+        currentTextIndex = (currentTextIndex + 1) % textLines.length;
     }
     
-    // Appliquer les optimisations au chargement et au redimensionnement
-    mobileOptimizations();
-    $(window).on('resize', mobileOptimizations);
+    // Décommenter cette ligne si l'animation CSS ne fonctionne pas
+    // let currentTextIndex = 0;
+    // setInterval(rotateText, 2500);
+
+    // Initialisation de ScrollIt si disponible
+    if(typeof $.scrollIt === 'function') {
+        $.scrollIt({
+            upKey: 38,
+            downKey: 40,
+            easing: 'linear',
+            scrollTime: 600,
+            activeClass: 'active',
+            onPageChange: null,
+            topOffset: -100
+        });
+    }
     
     // Gestion d'erreurs potentielles avec les images
     $('img').on('error', function() {
         $(this).attr('src', 'placeholder.svg'); // Remplacer par une image par défaut
     });
+    
+    // Optimiser le chargement des images
+    function lazyLoadImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        const options = {
+            threshold: 0.1,
+            rootMargin: '0px 0px 200px 0px'
+        };
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src;
+                        image.onload = () => image.removeAttribute('data-src');
+                        imageObserver.unobserve(image);
+                    }
+                });
+            }, options);
+            
+            images.forEach(img => imageObserver.observe(img));
+        } else {
+            // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.onload = () => img.removeAttribute('data-src');
+            });
+        }
+    }
+    
+    lazyLoadImages();
 });
