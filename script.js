@@ -46,17 +46,19 @@ $(document).ready(function() {
         });
     }).scroll();
 
-    // Défilement fluide pour les ancres avec ajustement pour header fixe
+    // Défilement fluide pour les ancres
     $('a[href^="#"]').on('click', function(e) {
         e.preventDefault();
         var target = this.hash;
         var $target = $(target);
         
-        // Tenir compte de la hauteur de la navbar avec une marge supplémentaire
-        var navHeight = $('.navbar').outerHeight() + 20;
+        // Tenir compte de la hauteur de la navbar
+        var navHeight = $('.navbar').outerHeight();
+        // Ajuster le décalage en fonction du dispositif (mobile ou desktop)
+        var offset = window.innerWidth <= 768 ? navHeight + 30 : navHeight;
         
         $('html, body').animate({
-            'scrollTop': $target.offset().top - navHeight
+            'scrollTop': $target.offset().top - offset
         }, 800, 'swing');
     });
 
@@ -66,17 +68,7 @@ $(document).ready(function() {
             duration: 800,
             easing: 'ease-in-out',
             once: false,
-            mirror: false,
-            // Déclenche le chargement une fois pour les appareils mobiles
-            disable: function() {
-                var maxWidth = 800;
-                return window.innerWidth < maxWidth && 'mobile';
-            }
-        });
-        
-        // Rafraîchir AOS lors du redimensionnement
-        $(window).on('resize', function() {
-            AOS.refresh();
+            mirror: false
         });
     }
 
@@ -101,35 +93,30 @@ $(document).ready(function() {
     }
 
     // Déclencher l'animation des statistiques quand la section devient visible
-    function checkStatsVisibility() {
+    $(window).on('scroll', function() {
         var statsOffset = $('.about-stats').offset();
         if (statsOffset) {
             var windowHeight = $(window).height();
-            var windowScroll = $(window).scrollTop();
+            var windowScroll = $(this).scrollTop();
     
             if (windowScroll + windowHeight > statsOffset.top + 100) {
                 animateStats();
-                $(window).off('scroll.stats'); // Ne déclencher qu'une seule fois
+                $(window).off('scroll'); // Ne déclencher qu'une seule fois
             }
         }
-    }
-    
-    $(window).on('scroll.stats', checkStatsVisibility);
-    checkStatsVisibility(); // Vérifie au chargement initial
+    });
 
-    // Animation des éléments au survol avec désactivation sur mobile
-    if (window.innerWidth > 768) {
-        $('.skill-card, .timeline-item, .formation-content, .certification-card, .project-content').hover(
-            function() {
-                $(this).css('transform', 'translateY(-10px)');
-            },
-            function() {
-                $(this).css('transform', 'translateY(0)');
-            }
-        );
-    }
+    // Animation des éléments au survol
+    $('.skill-card, .timeline-item, .formation-content, .certification-card, .project-content').hover(
+        function() {
+            $(this).css('transform', 'translateY(-10px)');
+        },
+        function() {
+            $(this).css('transform', 'translateY(0)');
+        }
+    );
 
-    // Animation des logos dans la section brands
+    // Animation des logos dans la section brands - Amélioré pour préserver les proportions
     $('.carouselTrack').css('animation-play-state', 'running');
     
     $('.brandsCarousel').hover(
@@ -219,43 +206,6 @@ $(document).ready(function() {
         }
     });
 
-    // Gestion d'erreurs potentielles avec les images
-    $('img').on('error', function() {
-        $(this).attr('src', 'placeholder.svg');
-    });
-    
-    // Optimiser le chargement des images avec lazy loading
-    function lazyLoadImages() {
-        const images = document.querySelectorAll('img[data-src]');
-        const options = {
-            threshold: 0.1,
-            rootMargin: '0px 0px 200px 0px'
-        };
-        
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const image = entry.target;
-                        image.src = image.dataset.src;
-                        image.onload = () => image.removeAttribute('data-src');
-                        imageObserver.unobserve(image);
-                    }
-                });
-            }, options);
-            
-            images.forEach(img => imageObserver.observe(img));
-        } else {
-            // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
-            images.forEach(img => {
-                img.src = img.dataset.src;
-                img.onload = () => img.removeAttribute('data-src');
-            });
-        }
-    }
-    
-    lazyLoadImages();
-
     // Gestion du formulaire de contact avec EmailJS
     $('#contact-form').on('submit', function(e) {
         e.preventDefault();
@@ -309,6 +259,29 @@ $(document).ready(function() {
             });
     });
 
+    // Pour les carrousels et lightbox (si vous ajoutez des galeries)
+    if(typeof $.fn.owlCarousel !== 'undefined') {
+        $(".owl-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            nav: true,
+            navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+            dots: true
+        });
+    }
+    
+    if(typeof $.fn.magnificPopup !== 'undefined') {
+        $('.image-popup').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    }
+
     // Effet de hover sur les icônes de compétences
     $('.skill-icon').hover(
         function() {
@@ -325,76 +298,91 @@ $(document).ready(function() {
         }
     );
 
-    // Animation du texte sur la page d'accueil pour appareils à faibles performances
-    const textLines = document.querySelectorAll('.text-line');
-    
-    // Si l'animation CSS ne fonctionne pas correctement, activer cette fonction alternative
-    function rotateText() {
-        // Masquer tous les textes
-        textLines.forEach(line => {
-            line.style.opacity = '0';
-            line.style.transform = 'translateY(20px)';
-        });
-        
-        // Afficher le texte courant
-        textLines[currentTextIndex].style.opacity = '1';
-        textLines[currentTextIndex].style.transform = 'translateY(0)';
-        
-        // Passer au texte suivant
-        currentTextIndex = (currentTextIndex + 1) % textLines.length;
-    }
-    
-    // Décommenter cette ligne si l'animation CSS ne fonctionne pas
-    // let currentTextIndex = 0;
-    // setInterval(rotateText, 2500);
-
-    // Optimisations pour les appareils mobiles
+    // Optimisations pour les appareils mobiles SEULEMENT
     function mobileOptimizations() {
-        if (window.innerWidth <= 768) {
-            // Désactiver certaines animations sur mobile pour améliorer les performances
-            $('.carouselTrack').css('animation-play-state', 'paused');
-            setTimeout(function() {
-                $('.carouselTrack').css('animation-play-state', 'running');
-            }, 100);
-
-            // Ajustement de la taille des éléments
-            $('.navbar-toggler').css({
-                'width': '45px',
-                'height': '40px',
-                'font-size': '20px'
-            });
-
-            // Optimisation des icônes sociales
-            $('.header-social-icon ul li a').css({
-                'width': '42px',
-                'height': '42px',
-                'display': 'flex',
-                'justify-content': 'center',
-                'align-items': 'center'
-            });
-
-            // Améliorer l'accessibilité du formulaire de contact sur mobile
-            $('.form-group input, .form-group textarea').css('padding', '12px');
+        if (window.innerWidth <= 991) {
+            // Amélioration du bouton hamburger sur mobile
+            if (!$('.navbar-toggler').hasClass('mobile-enhanced')) {
+                $('.navbar-toggler').addClass('mobile-enhanced').css({
+                    'display': 'flex',
+                    'align-items': 'center',
+                    'justify-content': 'center',
+                    'height': '40px',
+                    'width': '50px',
+                    'font-size': '20px'
+                });
+            }
             
-            // Désactiver certaines transitions plus lourdes
-            $('.project-image').css('transition', 'transform 0.4s ease');
+            // Amélioration de l'image principale sur mobile
+            $('.home-img img').css({
+                'border-radius': '15px',
+                'box-shadow': '0 10px 30px rgba(0, 0, 0, 0.1)',
+                'max-width': '75%',
+                'margin': '0 auto'
+            });
+            
+            // Amélioration des icônes sociales sur mobile
+            $('.header-social-icon ul li a').css({
+                'display': 'flex',
+                'align-items': 'center',
+                'justify-content': 'center',
+                'width': '45px',
+                'height': '45px',
+                'line-height': '1'
+            });
+            
+            // Centre le texte et les boutons sur mobile
+            $('.home-text').css('text-align', 'center');
+            $('.home-btn').css({
+                'display': 'flex',
+                'justify-content': 'center'
+            });
+        } else {
+            // Réinitialisation pour desktop
+            if ($('.navbar-toggler').hasClass('mobile-enhanced')) {
+                $('.navbar-toggler').removeClass('mobile-enhanced').css({
+                    'display': '',
+                    'align-items': '',
+                    'justify-content': '',
+                    'height': '',
+                    'width': '',
+                    'font-size': ''
+                });
+            }
+            
+            // Réinitialisation de l'image principale
+            $('.home-img img').css({
+                'border-radius': '',
+                'box-shadow': '',
+                'max-width': '',
+                'margin': ''
+            });
+            
+            // Réinitialisation des icônes sociales
+            $('.header-social-icon ul li a').css({
+                'display': '',
+                'align-items': '',
+                'justify-content': '',
+                'width': '',
+                'height': '',
+                'line-height': ''
+            });
+            
+            // Réinitialisation du texte et des boutons
+            $('.home-text').css('text-align', '');
+            $('.home-btn').css({
+                'display': '',
+                'justify-content': ''
+            });
         }
     }
-
-    // Appliquer les optimisations pour mobile au chargement et au redimensionnement
+    
+    // Appliquer les optimisations au chargement et au redimensionnement
     mobileOptimizations();
     $(window).on('resize', mobileOptimizations);
-
-    // Prise en charge des appareils tactiles
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-        // Amélioration de l'expérience des boutons sur appareils tactiles
-        $('.btn-1, .btn-2, .project-nav-btn, .social-link, .cv-button, .project-dot').addClass('touch-friendly');
-        
-        // Ajout d'un effet feedback tactile
-        $('.touch-friendly').on('touchstart', function() {
-            $(this).css('transform', 'scale(0.95)');
-        }).on('touchend', function() {
-            $(this).css('transform', '');
-        });
-    }
+    
+    // Gestion d'erreurs potentielles avec les images
+    $('img').on('error', function() {
+        $(this).attr('src', 'placeholder.svg'); // Remplacer par une image par défaut
+    });
 });
