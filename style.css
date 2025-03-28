@@ -240,7 +240,7 @@ a, a:hover { text-decoration: none; }
 /*NAVBAR*/
 .navbar { 
     background-color: var(--white); 
-    padding: 20px 0; 
+    padding: 30px 0; 
     box-shadow: 0 10px 10px rgba(0, 0, 0, .08); 
     transition: all .5s ease;
     position: fixed;
@@ -249,7 +249,7 @@ a, a:hover { text-decoration: none; }
     right: 0;
     z-index: 1000;
 }
-    .navbar.navbar-shrink { padding: 15px 0; box-shadow: 0 10px 10px rgba(0, 0, 0, .1); }
+    .navbar.navbar-shrink { padding: 20px 0; box-shadow: 0 10px 10px rgba(0, 0, 0, .1); }
     .navbar > .container { padding: 0 15px; }
     .navbar .navbar-brand { 
         font-family: 'Italiana', serif;
@@ -283,43 +283,10 @@ a, a:hover { text-decoration: none; }
                 .navbar .nav-item .nav-link.active, .navbar .nav-item .nav-link:hover { color: var(--main-color); }
                     .navbar .nav-item .nav-link.active::before, .navbar .nav-item .nav-link:hover::before { height: 45px; }
 
-/* Navbar toggler amélioré pour mobile */
-.navbar-toggler {
-    background-color: var(--main-color);
-    height: 40px;
-    width: 50px;
-    padding: 0;
-    font-size: 20px;
-    color: var(--white);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    position: relative;
-    z-index: 1050;
-}
-
-.navbar-collapse {
-    transition: all 0.3s ease;
-}
-
-.navbar-nav {
-    margin-left: auto;
-}
-
-.ml-auto {
-    margin-left: auto;
-}
-
 .header-content {
     background-color: #fbfbfb;
-    min-height: 600px;
-    height: auto;
-    padding-top: 130px;
-    padding-bottom: 40px;
+    height: 800px;
+    padding-top: 110px;
     position: relative;
     overflow: hidden;
 }
@@ -327,6 +294,7 @@ a, a:hover { text-decoration: none; }
 #parallax { position: absolute; height: 100%; width: 100%; }
 
 /*HOME*/
+
 .header-shape { position: absolute !important; }
 .header-shape.shape-one { top: 4.5% !important; left: 0 !important; }
 .header-shape.shape-two { top: 2.5% !important; left: 20% !important; }
@@ -414,67 +382,82 @@ a, a:hover { text-decoration: none; }
     margin-top: 30px;
 }
 
-/* Image de profil améliorée */
 .home-img {
     position: relative;
     z-index: 2;
-    text-align: center;
-    margin-top: 30px;
 }
 
-.profile-image {
-    max-width: 80%;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: var(--box-shadow);
-    position: relative;
-    z-index: 5;
+.home-img::before {
+    position: absolute;
+    content: '';
+    width: 85%;
+    height: 82%;
+    border: 20px solid var(--main-color);
+    border-bottom: none;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
 }
 
-/* Header Social Icons améliorés */
-.header-social { 
-    position: relative;
-    width: 100%;
-    padding: 20px 0;
-    margin-top: 30px;
-    z-index: 10;
-}
-
-.header-social-icon { 
-    text-align: center;
-}
-
-.header-social-icon ul {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.header-social-icon ul li { 
-    display: inline-block;
-}
-
-.header-social-icon ul li a {
-    color: var(--black400);
-    font-size: 22px;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: var(--white);
-    box-shadow: var(--shadow-black100);
-    transition: all .3s ease;
-}
-
-.header-social-icon ul li a:hover { 
-    color: var(--white); 
+.home-img::after {
+    position: absolute;
+    content: '';
+    width: 85%;
+    height: 20px;
     background-color: var(--main-color);
-    border-color: var(--main-color);
-    transform: translateY(-3px);
+    bottom: 50px;
+    left: 0;
+    z-index: 11;
 }
+
+.home-img img { 
+    position: relative; 
+    z-index: 5; 
+}
+
+.header-social { 
+    position: absolute; 
+    bottom: 30px; 
+    left: 15px; 
+    width: 100%; 
+}
+    .header-social .header-social-icon { position: relative; }
+
+        .header-social .header-social-icon::before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 2px;
+            background-color: var(--main-color);
+            left: -102.5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header-social .header-social-icon ul li { 
+            display: inline-block; 
+            margin-left: 13px; 
+        }
+            .header-social .header-social-icon ul li:first-child { margin-left: 0; }
+
+            .header-social .header-social-icon ul li a {
+                color: #cccccc;
+                font-size: 20px;
+                width: 40px;
+                height: 40px;
+                display: inline-block;
+                line-height: 40px;
+                border-radius: 50%;
+                border: 1px solid #cccccc;
+                text-align: center;
+                transition: all .3s ease-out 0s;
+            }
+
+                .header-social .header-social-icon ul li a:hover { 
+                    color: var(--white); 
+                    background-color: var(--main-color);
+                    border-color: var(--main-color);
+                }
 
 /* Défilement des logos amélioré */
 .brands-section {
@@ -1774,6 +1757,30 @@ a, a:hover { text-decoration: none; }
     transform: perspective(400px) rotateX(0);
 }
 
+/* Navbar toggler pour mobile */
+.navbar-toggler {
+    background-color: var(--main-color);
+    height: 34px;
+    width: 44px;
+    padding: 0;
+    font-size: 17px;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
 /* Styling for EmailJS alerts */
 .alert {
     padding: 1rem;
@@ -1798,13 +1805,10 @@ a, a:hover { text-decoration: none; }
     margin-top: 1rem;
 }
 
-/* Media Queries améliorés */
+/* Media Queries */
 @media(max-width: 991px) {
     .header-content {
-        height: auto;
-        min-height: 600px;
-        padding-top: 100px;
-        padding-bottom: 40px;
+        height: 640px;
     }
     
     .navbar-toggler {
@@ -1820,8 +1824,6 @@ a, a:hover { text-decoration: none; }
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
     
     .navbar-collapse.show {
@@ -1829,28 +1831,31 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar-nav {
-        padding: 15px 0;
+        padding: 10px 0;
     }
     
     .navbar .nav-item {
         margin: 0;
-        padding: 10px 20px;
-        text-align: center;
+        padding: 5px 15px;
     }
     
     .navbar .nav-item .nav-link::before {
         display: none;
     }
     
+    .home-img::before, .home-img::after {
+        display: none;
+    }
+    
     .home-img {
         display: flex;
         justify-content: center;
-        margin: 40px 0;
+        margin-bottom: 30px;
     }
     
-    .profile-image {
+    .home-img img {
         max-width: 70%;
-        margin: 0 auto;
+        height: auto;
     }
     
     .row {
@@ -1863,7 +1868,7 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text {
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         text-align: center;
     }
     
@@ -1876,7 +1881,11 @@ a, a:hover { text-decoration: none; }
         position: relative;
         bottom: auto;
         left: auto;
-        margin-top: 20px;
+        margin-top: 30px;
+    }
+    
+    .header-social-icon::before {
+        display: none;
     }
     
     .about-content {
@@ -1922,27 +1931,6 @@ a, a:hover { text-decoration: none; }
 }
 
 @media(max-width: 767px) {
-    :root {
-        --h1-size: clamp(2rem, 5vw, 3rem);
-        --h2-size: clamp(1.7rem, 4vw, 2.5rem);
-        --h3-size: clamp(1.3rem, 3vw, 1.8rem);
-    }
-    
-    .navbar {
-        padding: 15px 0;
-    }
-    
-    .navbar .navbar-brand {
-        font-size: 26px;
-    }
-    
-    .navbar-toggler {
-        width: 45px;
-        height: 40px;
-        font-size: 18px;
-        margin-right: 5px;
-    }
-    
     .header-shape.shape-one img,
     .header-shape.shape-two img,
     .header-shape.shape-four img,
@@ -1985,20 +1973,19 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text h4 {
-        font-size: 22px;
+        font-size: 24px;
     }
     
     .home-text h1, .gradient-text {
-        font-size: 36px;
+        font-size: 38px;
     }
     
     .home-text p {
         padding-bottom: 10px;
-        font-size: 16px;
     }
     
     .text-line {
-        font-size: 18px;
+        font-size: 20px;
     }
     
     .section-title h2 {
@@ -2026,21 +2013,17 @@ a, a:hover { text-decoration: none; }
     .events-grid {
         grid-template-columns: 1fr;
     }
-    
-    .profile-image {
-        max-width: 80%;
-    }
-    
-    .header-social-icon ul li a {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
 }
 
 @media(max-width: 576px) {
+    :root {
+        --h1-size: clamp(2rem, 10vw, 3rem);
+        --h2-size: clamp(1.8rem, 8vw, 2.5rem);
+        --h3-size: clamp(1.3rem, 6vw, 1.8rem);
+    }
+    
     .navbar {
-        padding: 12px 0;
+        padding: 20px 0;
     }
     
     .navbar .navbar-brand {
@@ -2048,14 +2031,15 @@ a, a:hover { text-decoration: none; }
     }
     
     .navbar-toggler {
-        width: 42px;
-        height: 38px;
-        margin-right: 0;
+        width: 38px;
+        height: 30px;
     }
     
     .header-content {
+        height: auto;
+        min-height: 600px;
         padding-top: 90px;
-        min-height: 550px;
+        padding-bottom: 40px;
     }
     
     .home-text h4 {
@@ -2067,31 +2051,24 @@ a, a:hover { text-decoration: none; }
     }
     
     .home-text p {
-        font-size: 15px;
-        line-height: 1.5;
-    }
-    
-    .btn-1 {
-        padding: 12px 25px;
-        font-size: 14px;
-    }
-    
-    .profile-image {
-        max-width: 85%;
-    }
-    
-    .home-img {
-        margin: 30px 0;
-    }
-    
-    .header-social-icon ul li a {
-        width: 38px;
-        height: 38px;
         font-size: 16px;
     }
     
-    .header-social {
-        margin-top: 15px;
+    .btn-1 {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+    
+    .header-social .header-social-icon ul li a {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+    }
+    
+    .brandLogo {
+        flex: 0 0 180px;
+        height: 80px;
     }
     
     .showcase-grid {
@@ -2099,7 +2076,7 @@ a, a:hover { text-decoration: none; }
     }
     
     .project-image-container {
-        height: 220px;
+        height: 250px;
     }
     
     .about-container, .skills-container, .projects-container, .contact-container,
@@ -2135,6 +2112,11 @@ a, a:hover { text-decoration: none; }
     
     .loader-subtitle {
         font-size: 1.4rem;
+    }
+    
+    /* Amélioration pour la photo de profil sur mobile */
+    .home-img img {
+        max-width: 85%;
     }
 }
 
