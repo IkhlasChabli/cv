@@ -135,9 +135,9 @@ a, a:hover { text-decoration: none; }
     align-items: center;
 }
 
-.col-lg-6, .col-lg-12 { /* */
-    padding-left: 15px; /* */
-    padding-right: 15px; /* */
+.col-lg-6, .col-lg-12 { /* Common padding for columns */
+    padding-left: 15px; 
+    padding-right: 15px; 
 }
 
 
@@ -1914,7 +1914,7 @@ a, a:hover { text-decoration: none; }
     }
 
     .home-img { 
-        display: none; 
+        display: none; /* Hide profile photo on mobile */
     }
     
     .row { 
