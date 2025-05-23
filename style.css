@@ -43,23 +43,23 @@
 }
 
 html {
-    overflow-x: hidden; 
+    overflow-x: hidden; /* Prevent horizontal scroll on html element */
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: normal;
-    overflow-x: hidden; 
+    overflow-x: hidden; /* Apply to body as well */
     background-color: var(--white);
-    width: 100%; 
+    width: 100%; /* Ensure body takes full width */
 }
 
 * { 
     margin: 0; 
     padding: 0; 
     outline: none !important; 
-    box-sizing: border-box; 
+    box-sizing: border-box; /* Added for consistent sizing */
 }
 
 img { max-width: 100%; vertical-align: middle; }
@@ -77,8 +77,8 @@ a, a:hover { text-decoration: none; }
     box-shadow: var(--shadow-black300);
     font-weight: 500;
     transition: all .5s ease;
-    display: inline-block; 
-    text-align: center; 
+    display: inline-block; /* Ensure it behaves as a block for centering text if it wraps */
+    text-align: center; /* Center text if it wraps */
 }
 
     .btn-1:hover { color: var(--main-color); background-color: var(--white); }
@@ -119,6 +119,7 @@ a, a:hover { text-decoration: none; }
 
         .section-title h2 span { color: var(--main-color); }
 
+/* Classes pour Bootstrap */
 .container {
     width: 100%;
     max-width: 1140px;
@@ -136,7 +137,7 @@ a, a:hover { text-decoration: none; }
     align-items: center;
 }
 
-.col-lg-6, .col-lg-12 { 
+.col-lg-6, .col-lg-12 { /* Common padding for columns */
     padding-left: 15px; 
     padding-right: 15px; 
 }
@@ -164,6 +165,7 @@ a, a:hover { text-decoration: none; }
     display: block;
 }
 
+/* Overlay initial amélioré */
 .intro-overlay {
     position: fixed;
     top: 0;
@@ -253,6 +255,7 @@ a, a:hover { text-decoration: none; }
     50% { transform: translateY(-20px); }
 }
 
+/*NAVBAR*/
 .navbar { 
     background-color: var(--white); 
     padding: 30px 0; 
@@ -322,6 +325,8 @@ a, a:hover { text-decoration: none; }
     overflow: hidden; 
 }
 
+/*HOME*/
+
 .header-shape { position: absolute !important; }
 .header-shape.shape-one { top: 4.5% !important; left: 0 !important; }
 .header-shape.shape-two { top: 2.5% !important; left: 20% !important; }
@@ -341,7 +346,6 @@ a, a:hover { text-decoration: none; }
     flex-direction: column; 
     align-items: center; 
     text-align: center; 
-    width: 100%; 
 }
 
 .home-text h4 { 
@@ -382,6 +386,7 @@ a, a:hover { text-decoration: none; }
     font-weight: 300; 
     padding-bottom: 5px; 
     margin-top: 5px; 
+    /* max-width: 90%; Removed to rely on parent centering */
 }
 
 .hero-tagline {
@@ -421,9 +426,9 @@ a, a:hover { text-decoration: none; }
 
 .home-btn {
     margin-top: 25px; 
-    display: flex; 
-    justify-content: center; 
-    width: 100%; 
+    display: flex; /* Added to center the button */
+    justify-content: center; /* Added to center the button */
+    width: 100%; /* Ensure the wrapper takes full available width for centering */
 }
 
 .home-img {
@@ -510,6 +515,7 @@ a, a:hover { text-decoration: none; }
                     border-color: var(--main-color);
                 }
 
+/* Défilement des logos amélioré */
 .brands-section {
     padding: 60px 0; 
     overflow: hidden;
@@ -587,6 +593,7 @@ a, a:hover { text-decoration: none; }
     transform: translateY(-5px);
 }
 
+/* Section à propos */
 .about-section {
     padding: 80px 0; 
     background-color: var(--white);
@@ -825,6 +832,7 @@ a, a:hover { text-decoration: none; }
     color: var(--primary-color);
 }
 
+/* Section Compétences */
 .skills-section {
     padding: var(--spacing-xl) 0; 
     background-color: rgba(108, 91, 123, 0.05);
@@ -909,6 +917,7 @@ a, a:hover { text-decoration: none; }
     transform: translateY(-3px);
 }
 
+/* Section projets */
 .projects-section {
     padding: var(--spacing-xl) 0; 
     background: linear-gradient(to bottom, rgba(217, 137, 181, 0.05), rgba(246, 114, 128, 0.05));
@@ -920,6 +929,7 @@ a, a:hover { text-decoration: none; }
     padding: 0 var(--spacing-lg); 
 }
 
+/* Slider principal */
 .projects-slider-container {
     position: relative;
     margin: 60px 0; 
@@ -1082,6 +1092,7 @@ a, a:hover { text-decoration: none; }
     transform: translateY(-3px);
 }
 
+/* Navigation du slider */
 .projects-nav {
     position: absolute;
     top: 50%; 
@@ -1133,6 +1144,7 @@ a, a:hover { text-decoration: none; }
     opacity: 1;
 }
 
+/* Indicateurs de pagination */
 .project-dots {
     display: flex;
     justify-content: center;
@@ -1155,6 +1167,7 @@ a, a:hover { text-decoration: none; }
     transform: scale(1.2);
 }
 
+/* Showcase des projets secondaires */
 .projects-showcase {
     margin-top: 100px; 
 }
@@ -1279,6 +1292,7 @@ a, a:hover { text-decoration: none; }
     opacity: 0.8;
 }
 
+/* Animation en entrée */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1290,6 +1304,7 @@ a, a:hover { text-decoration: none; }
     }
 }
 
+/* Formation Section */
 .formation-section {
     padding: var(--spacing-xl) 0; 
     background-color: var(--light-color);
@@ -1355,6 +1370,7 @@ a, a:hover { text-decoration: none; }
     color: var(--accent-color);
 }
 
+/* Certifications Section */
 .certifications-section {
     padding: var(--spacing-xl) 0; 
     background-color: rgba(246, 114, 128, 0.05);
@@ -1428,6 +1444,7 @@ a, a:hover { text-decoration: none; }
     font-weight: 600;
 }
 
+/* Expériences Section */
 .experiences-section {
     padding: var(--spacing-xl) 0; 
     background-color: rgba(217, 137, 181, 0.05);
@@ -1584,6 +1601,7 @@ a, a:hover { text-decoration: none; }
     color: var(--accent-color);
 }
 
+/* Section Contact */
 .contact-section {
     padding: var(--spacing-xl) 0; 
     background-color: rgba(246, 114, 128, 0.05);
@@ -1733,6 +1751,7 @@ a, a:hover { text-decoration: none; }
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Footer */
 .footer {
     background-color: var(--main-color);
     padding: 20px 0;
@@ -1747,6 +1766,7 @@ a, a:hover { text-decoration: none; }
     margin: 0;
 }
 
+/* Animations et effets */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1758,6 +1778,7 @@ a, a:hover { text-decoration: none; }
     }
 }
 
+/* Animations AOS custom */
 [data-aos="fade-up"] {
     opacity: 0;
     transform: translateY(50px);
@@ -1802,6 +1823,7 @@ a, a:hover { text-decoration: none; }
     transform: perspective(400px) rotateX(0);
 }
 
+/* Navbar toggler pour mobile */
 .navbar-toggler {
     background-color: var(--main-color); 
     height: 34px; 
@@ -1826,6 +1848,7 @@ a, a:hover { text-decoration: none; }
     margin-left: auto; 
 }
 
+/* Styling for EmailJS alerts */
 .alert {
     padding: 1rem;
     margin-top: 1rem;
@@ -1899,34 +1922,26 @@ a, a:hover { text-decoration: none; }
         padding-bottom: 40px; 
     }
 
-    .home .row { 
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-        width: 100%; 
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    .home .row > .col-lg-6 { /* Applies to both text and image columns when stacked */
-        width: 100%;
-        max-width: 100%; /* Ensure it can use full width */
-        margin-left: auto; /* Center the column itself if its content is narrower */
-        margin-right: auto;
-    }
-    
     .home-text { 
-        width: 100%; /* Takes full width of its parent .col-lg-6 */
-        max-width: 550px; /* Max width for the text block itself */
-        margin-left: auto; /* Centers .home-text if .col-lg-6 is wider */
-        margin-right: auto; /* Centers .home-text if .col-lg-6 is wider */
+        width: 100%; 
         padding-left: 15px; 
         padding-right: 15px;
-        /* display: flex, flex-direction: column, align-items: center, text-align: center are global */
     }
     
     .home-img { 
         display: none; 
+    }
+    
+    .row { 
+        flex-direction: column; 
+        align-items: center; 
+        margin-left: 0; 
+        margin-right: 0; 
+    }
+    
+    .col-lg-6 { 
+        flex: 0 0 100%; 
+        max-width: 100%; 
     }
     
     .header-social { 
@@ -2041,7 +2056,6 @@ a, a:hover { text-decoration: none; }
     .home-text {
         padding-left: 10px; 
         padding-right: 10px;
-        max-width: 95%; /* Allow a bit more width on slightly larger "small" screens */
     }
 
     .home-text h4 { 
@@ -2230,9 +2244,9 @@ a, a:hover { text-decoration: none; }
     }
     
     .btn-1 { 
-        padding: 10px 20px; 
+        padding: 10px 20px; /* Adjusted padding */
         font-size: 13px; 
-        /* white-space: nowrap; /* Removed to allow wrapping if needed */
+        white-space: nowrap; /* Prevent button text from wrapping */
     }
     
     .header-social .header-social-icon ul li a { 
@@ -2324,14 +2338,10 @@ a, a:hover { text-decoration: none; }
     }
 }
 
+/* Specific adjustments for very small screens if button still wraps or layout is tight */
 @media (max-width: 370px) {
-    .home-text {
-        max-width: 100%; /* Allow full width, padding will handle spacing */
-        padding-left: 5px;
-        padding-right: 5px;
-    }
     .home-text h1, .gradient-text {
-        font-size: 24px; 
+        font-size: 24px; /* Even smaller title */
         padding-bottom: 10px;
     }
     .home-text h4 {
@@ -2339,10 +2349,10 @@ a, a:hover { text-decoration: none; }
         padding-bottom: 5px;
     }
     .text-line {
-        font-size: 14px; 
+        font-size: 14px; /* Smaller tagline text */
         height: 40px;
     }
-    @keyframes moveUp { 
+    @keyframes moveUp { /* Re-adjust for new text-line height */
         0%, 20% { transform: translateY(0); }
         25%, 45% { transform: translateY(-40px); }
         50%, 70% { transform: translateY(-80px); }
@@ -2354,14 +2364,14 @@ a, a:hover { text-decoration: none; }
         margin-bottom: 8px;
     }
     .home-text p {
-        font-size: 13px; 
+        font-size: 13px; /* Smaller paragraph text */
         line-height: 1.5;
         margin-top: 4px;
         padding-bottom: 4px;
     }
     .btn-1 {
-        padding: 8px 15px; 
-        font-size: 12px;   
+        padding: 8px 15px; /* Significantly reduce padding */
+        font-size: 12px;   /* Smaller font in button */
     }
     .home-btn {
         margin-top: 20px;
@@ -2382,5 +2392,3 @@ a, a:hover { text-decoration: none; }
         margin-left: 25px; 
     }
 }
-```
-</canv
