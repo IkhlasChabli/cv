@@ -340,6 +340,10 @@ a, a:hover { text-decoration: none; }
 .home-text {
     position: relative;
     z-index: 2;
+    display: flex; /* Added for centering content */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Ensure text itself is centered */
 }
 
 .home-text h4 { 
@@ -347,10 +351,12 @@ a, a:hover { text-decoration: none; }
     font-weight: 600; 
     padding-bottom: 8px; 
     color: var(--main-color); 
+    margin-top: 0; /* Reset margin if any */
 }
 
 .home-text h1 { 
     padding-bottom: 8px;
+    margin-top: 0; /* Reset margin if any */
 }
 
 .gradient-text {
@@ -367,26 +373,34 @@ a, a:hover { text-decoration: none; }
 
 .elegant-title {
     letter-spacing: 2px;
-    margin-top: 15px;
+    margin-top: 15px; /* Keep or adjust as needed */
     text-transform: uppercase;
 }
 
 .home-text p { 
     font-size: 18px; 
-    line-height: 28px; 
+    line-height: 1.6; /* Adjusted for better readability */
     color: var(--black900); 
     font-weight: 300; 
     padding-bottom: 5px; 
+    margin-top: 5px; /* Add some space above paragraphs */
+    max-width: 90%; /* Prevent text from being too wide on some mobiles */
 }
 
 .hero-tagline {
     height: 60px; 
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Keep or adjust as needed */
+    width: 100%; /* Ensure it takes available width for centering */
+    display: flex; /* For centering the inner text-animation */
+    justify-content: center; /* For centering the inner text-animation */
 }
 
 .text-animation {
     animation: moveUp 10s infinite;
+    display: flex; /* Align items inside animation if needed */
+    flex-direction: column; /* Stack lines */
+    align-items: center; /* Center lines */
 }
 
 @keyframes moveUp {
@@ -401,13 +415,15 @@ a, a:hover { text-decoration: none; }
     height: 60px; 
     display: flex;
     align-items: center;
+    justify-content: center; /* Center text within the line */
     color: var(--accent-color);
     font-weight: 600;
     font-size: 24px; 
+    width: 100%; /* Ensure line takes full width for centering */
 }
 
 .home-btn {
-    margin-top: 30px;
+    margin-top: 25px; /* Adjusted margin */
 }
 
 .home-img {
@@ -1899,18 +1915,21 @@ a, a:hover { text-decoration: none; }
         min-height: calc(100vh - 74px); 
         padding-top: 100px; 
         padding-bottom: 40px; 
-        align-items: center; 
-        text-align: center; 
+        /* align-items: center; /* Already set globally for .header-content */
+        /* text-align: center; /* Already set on .home-text for mobile */
     }
 
     .home-text { 
-        margin-bottom: 30px; 
-        text-align: center; 
+        /* margin-bottom: 30px; /* Already handled by flex centering */
+        /* text-align: center; /* Already set globally for .home-text */
+        width: 100%; /* Ensure it takes full width for centering its children */
+        padding-left: 15px; /* Add some padding for very narrow screens */
+        padding-right: 15px;
     }
     
     .home-btn { 
-        display: flex; 
-        justify-content: center; 
+        /* display: flex; /* Already handled by .home-text flex */
+        /* justify-content: center; /* Already handled by .home-text flex */
     }
 
     .home-img { 
@@ -1927,7 +1946,7 @@ a, a:hover { text-decoration: none; }
     .col-lg-6 { 
         flex: 0 0 100%; 
         max-width: 100%; 
-        padding: 0 15px; 
+        /* padding: 0 15px; /* Handled by .home-text padding */
     }
     
     .header-social { 
@@ -2038,16 +2057,53 @@ a, a:hover { text-decoration: none; }
         min-height: calc(100vh - 68px); 
         padding-top: 80px;
     }
+    
+    .home-text {
+        padding-left: 10px; /* Further reduce padding */
+        padding-right: 10px;
+    }
+
+    .home-text h4 { 
+        font-size: 20px; /* Further reduce font size */
+    }
+    
+    .home-text h1, .gradient-text { 
+        font-size: 30px; /* Further reduce font size */
+        line-height: 1.25; 
+    }
+    
+    .home-text p { 
+        padding-bottom: 8px; 
+        font-size: 15px; 
+        margin-top: 8px;
+    }
+    
+    .text-line { 
+        font-size: 16px; 
+        height: 45px; 
+    }
+    @keyframes moveUp { 
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-45px); }
+        50%, 70% { transform: translateY(-90px); }
+        75%, 95% { transform: translateY(-135px); }
+        100% { transform: translateY(-180px); }
+    }
+    .hero-tagline {
+        height: 45px; 
+        margin-bottom: 15px;
+    }
+
 
     .header-shape { 
-        opacity: 0.7;
+        opacity: 0.6; /* Slightly more transparent */
     }
     .header-shape.shape-one img, 
     .header-shape.shape-two img, 
     .header-shape.shape-four img, 
     .header-shape.shape-five img, 
     .header-shape.shape-six img { 
-        width: 30px; 
+        width: 25px; 
     }
     
     .header-shape.shape-three img, 
@@ -2055,97 +2111,66 @@ a, a:hover { text-decoration: none; }
     .header-shape.shape-eight img, 
     .header-shape.shape-nine img, 
     .header-shape.shape-ten img { 
-        width: 70px; 
+        width: 60px; 
     }
     
     .header-shape.shape-five { 
-        right: 15px !important; 
-        bottom: auto !important; 
-        top: 60% !important;
+        right: 10px !important; 
+        top: 65% !important;
     }
     
     .header-shape.shape-seven { 
-        left: 20px !important; 
-        bottom: 25px !important; 
+        left: 15px !important; 
+        bottom: 20px !important; 
     }
     
     .header-shape.shape-eight { 
-        left: 20px !important; 
-        bottom: 60px !important; 
+        left: 15px !important; 
+        bottom: 50px !important; 
     }
     
     .header-shape.shape-nine { 
-        left: auto !important; 
-        right: 20px !important;
-        bottom: 15px !important; 
+        right: 15px !important;
+        bottom: 10px !important; 
     }
     
     .header-shape.shape-ten { 
-        right: 10px !important; 
-        bottom: 10% !important; 
+        right: 5px !important; 
+        bottom: 8% !important; 
     }
     
-    .home-text h4 { 
-        font-size: 22px; 
-    }
-    
-    .home-text h1, .gradient-text { 
-        font-size: 34px; 
-        line-height: 1.2; 
-    }
-    
-    .home-text p { 
-        padding-bottom: 10px; 
-        font-size: 16px; 
-    }
-    
-    .text-line { 
-        font-size: 18px; 
-        height: 50px; 
-    }
-    @keyframes moveUp { 
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-50px); }
-        50%, 70% { transform: translateY(-100px); }
-        75%, 95% { transform: translateY(-150px); }
-        100% { transform: translateY(-200px); }
-    }
-    .hero-tagline {
-        height: 50px; 
-    }
-
     .section-title h2 { 
-        font-size: 26px; 
+        font-size: 24px; 
     }
     
     .project-nav-btn { 
-        width: 45px; 
-        height: 45px; 
-        font-size: 1rem; 
+        width: 40px; 
+        height: 40px; 
+        font-size: 0.9rem; 
     }
 
     .projects-nav {
-        top: 30%; 
+        top: 28%; 
     }
     
     .showcase-grid { 
         grid-template-columns: 1fr; 
-        gap: 25px; 
+        gap: 20px; 
     }
     
     .timeline { 
-        padding-left: 30px; 
+        padding-left: 25px; 
     }
 
     .timeline:before {
-        left: 5px;
+        left: 2px;
     }
     
     .timeline-dot { 
-        left: -5px; 
-        width: 20px;
-        height: 20px;
-        border-width: 3px;
+        left: -8px; 
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
     }
     
     .events-grid { 
@@ -2159,21 +2184,23 @@ a, a:hover { text-decoration: none; }
     .event-date {
         align-self: flex-start; 
         margin-bottom: 10px;
+        padding: 8px;
+        font-size: 0.9rem;
     }
 
     .certification-card {
         flex-direction: column; 
         align-items: center; 
         text-align: center; 
-        gap: 15px; 
+        gap: 10px; 
     }
 
     .formation-item, .timeline-item, .certification-card {
-        padding: 20px; 
+        padding: 15px; 
     }
 
     .timeline-item {
-        margin-bottom: 50px; 
+        margin-bottom: 40px; 
     }
      .home-img {
         display: none; 
