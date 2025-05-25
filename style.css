@@ -405,12 +405,13 @@ a, a:hover { text-decoration: none; }
     align-items: center; 
 }
 
+
 @keyframes moveUp {
-    0%, 20% { transform: translateY(0); }
-    25%, 45% { transform: translateY(-60px); } 
-    50%, 70% { transform: translateY(-120px); }
-    75%, 95% { transform: translateY(-180px); }
-    100% { transform: translateY(-240px); }
+    0%, 22% { transform: translateY(0); }
+    25%, 47% { transform: translateY(-60px); }
+    50%, 72% { transform: translateY(-120px); }
+    75%, 97% { transform: translateY(-180px); }
+    100% { transform: translateY(0); }
 }
 
 .text-line {
